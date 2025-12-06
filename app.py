@@ -2826,7 +2826,7 @@ def main():
                 st.caption("Login to save analysis history")
                 
                 with st.expander("🔐 Login / Register"):
-                    auth_tab = st.radio("", ["Login", "Register"], horizontal=True, label_visibility="collapsed")
+                    auth_tab = st.radio("Select Action", ["Login", "Register"], horizontal=True, label_visibility="collapsed")
                     
                     if auth_tab == "Login":
                         with st.form("sidebar_login"):
