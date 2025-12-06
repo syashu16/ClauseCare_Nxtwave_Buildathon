@@ -1,0 +1,45 @@
+# GenLegalAI - Unified Legal Document Platform Dependencies
+# Optimized for Streamlit Cloud Deployment
+
+# Environment & Utils
+python-dotenv>=1.0.0
+textstat
+colorama
+
+# Core dependencies
+groq>=0.4.0
+streamlit>=1.30.0
+plotly>=5.18.0
+pydantic>=2.0.0
+
+# AI & Logic Framework
+langchain>=0.1.0
+langchain-google-genai
+langchain-community
+
+# Vector Store - FAISS (cloud-compatible, no persistence needed)
+faiss-cpu>=1.7.4
+sentence-transformers>=2.2.0
+
+# ChromaDB - optional for local development
+# chromadb>=0.4.0
+
+# PDF processing
+pymupdf>=1.23.0
+
+# Document processing
+python-docx>=1.1.0
+
+# OCR (optional - for scanned PDFs)
+# pytesseract  # Requires system Tesseract installation
+Pillow>=10.0.0
+
+# Language detection
+langdetect
+
+# numpy for FAISS
+numpy>=1.24.0
+
+# Development dependencies
+pytest>=7.4.0
+pytest-cov>=4.1.0

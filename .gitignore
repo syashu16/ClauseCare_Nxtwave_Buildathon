@@ -1,0 +1,50 @@
+# ClauseCare - Byte-compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# Environment variables (contains API keys)
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ChromaDB local storage (using FAISS for cloud)
+chroma_db/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Old/backup files
+*.bak
+*_old.py
+app_old.py
+
+# Logs
+*.log
+
+# Distribution
+dist/
+build/
+*.egg-info/
