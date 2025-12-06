@@ -1,235 +1,316 @@
-# GenLegalAI - Risk Assessment Module
+# 🏛️ ClauseCare - AI-Powered Legal Document Platform
 
-A comprehensive legal contract risk assessment system that analyzes documents for potential risks and provides actionable recommendations.
+<div align="center">
 
-## 🎯 Features
+![ClauseCare](https://img.shields.io/badge/ClauseCare-Legal%20AI-blue?style=for-the-badge&logo=scale)
+![Python](https://img.shields.io/badge/Python-3.10+-green?style=for-the-badge&logo=python)
+![Streamlit](https://img.shields.io/badge/Streamlit-Cloud%20Ready-red?style=for-the-badge&logo=streamlit)
+![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 
-- **Two-Tier Analysis**: Fast keyword scanning + AI deep analysis
-- **8 Risk Categories**: Financial, Legal Liability, Termination, IP, Confidentiality, Dispute Resolution, Compliance, Operational
-- **Risk Scoring**: 0-100 scores with confidence levels
-- **Actionable Recommendations**: Clear guidance for each identified risk
-- **Interactive Visualizations**: Dashboards, gauges, heatmaps, and charts
-- **Export Options**: Markdown reports and JSON data
+**An intelligent legal document analysis platform with 7 powerful AI modules**
+
+[🚀 Live Demo](https://clausecare-nxtwave-buildathon.streamlit.app) | [📖 Documentation](#-features) | [🎥 Video Demo](#)
+
+</div>
+
+---
+
+## 🎯 Problem Statement
+
+Legal documents are complex, time-consuming to review, and often contain hidden risks that can cost businesses millions. Non-lawyers struggle to understand contract terms, and even legal professionals spend hours on routine document analysis.
+
+**ClauseCare solves this by:**
+- 🤖 Using AI to analyze contracts in seconds, not hours
+- 🌐 Supporting 22+ Indian languages for accessibility
+- 🎯 Identifying risks before you sign
+- 💡 Explaining legal jargon in plain English
+- 🤝 Providing negotiation strategies with multi-agent AI
+
+---
+
+## ✨ Features
+
+### 1. 📊 Risk Assessment Engine
+Comprehensive risk analysis with AI-powered insights.
+
+| Feature | Description |
+|---------|-------------|
+| **Two-Tier Analysis** | Fast keyword scanning + Deep AI analysis |
+| **8 Risk Categories** | Financial, Legal, Termination, IP, Confidentiality, Dispute, Compliance, Operational |
+| **Risk Scoring** | 0-100 scores with confidence levels |
+| **Visual Dashboards** | Gauges, heatmaps, pie charts, and more |
+| **Actionable Recommendations** | Clear guidance for each identified risk |
+
+### 2. 🤝 NegotiateAI - 6-Agent System
+A revolutionary multi-agent system for contract negotiation intelligence.
+
+| Agent | Role |
+|-------|------|
+| 📄 **Document Analyzer** | Extracts key terms, clauses, and structure |
+| ⚠️ **Risk Assessor** | Identifies and prioritizes contract risks |
+| 🎯 **Negotiation Strategist** | Creates negotiation tactics and BATNA analysis |
+| ⚖️ **Legal Advisor** | Ensures compliance and identifies legal issues |
+| 📈 **Market Researcher** | Provides industry benchmarks and market insights |
+| 🔧 **Contract Optimizer** | Suggests improved clause language |
+
+**Output:** Complete Negotiation Playbook with strategies, talking points, and success predictions.
+
+### 3. 💬 RAG Document Chat
+Chat with your legal documents using Retrieval-Augmented Generation.
+
+- Ask questions in plain English
+- Get cited answers with source references
+- Legal term explanations
+- Conversation history
+- Powered by FAISS vector store (cloud-compatible)
+
+### 4. ✨ Clause Simplification
+Transform complex legal language into plain English.
+
+- Flesch Reading Ease scores
+- Before/after comparisons
+- Batch processing
+- Readability improvement metrics
+- Legal jargon detection
+
+### 5. 🌐 Language Translation
+**Unique Feature:** Support for 22+ Indian languages!
+
+| Languages Supported |
+|---------------------|
+| Hindi (हिन्दी), Bengali (বাংলা), Telugu (తెలుగు), Marathi (मराठी) |
+| Tamil (தமிழ்), Gujarati (ગુજરાતી), Kannada (ಕನ್ನಡ), Malayalam (മലയാളം) |
+| Odia (ଓଡ଼ିଆ), Punjabi (ਪੰਜਾਬੀ), Assamese (অসমীয়া), Sanskrit (संस्कृत) |
+| Urdu (اردو), Konkani, Manipuri, Nepali, Sindhi, Dogri |
+| Maithili, Bodo, Santali, Kashmiri |
+
+**Translates:**
+- Full legal documents
+- Risk assessment summaries
+- Negotiation strategies
+
+### 6. 📄 Document Processor
+Advanced document processing with multiple format support.
+
+- **PDF Processing** with table extraction
+- **DOCX Processing** with metadata
+- **TXT/Plain Text** support
+- **OCR** for scanned documents (when available)
+- Text chunking for large documents
+- Legal entity extraction (dates, amounts, references)
+
+### 7. 🔐 User Authentication & History
+Secure user system with persistent analysis history.
+
+- User registration and login
+- Password hashing (SHA-256 with salt)
+- Analysis history tracking
+- Personal dashboard
+- Data persistence across sessions
+
+---
 
 ## 🚀 Quick Start
+
+### Prerequisites
+- Python 3.10+
+- Groq API Key (free at [console.groq.com](https://console.groq.com))
 
 ### Installation
 
 ```bash
 # Clone the repository
-cd "NXTWAVE BUILDATHON"
+git clone https://github.com/syashu16/ClauseCare_Nxtwave_Buildathon.git
+cd ClauseCare_Nxtwave_Buildathon
+
+# Create virtual environment
+python -m venv venv
+venv\Scripts\activate  # Windows
+source venv/bin/activate  # Linux/Mac
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Set your Groq API key (for AI-powered analysis)
-set GROQ_API_KEY=your_api_key_here  # Windows
-export GROQ_API_KEY=your_api_key_here  # Linux/Mac
+# Set your API key
+echo "GROQ_API_KEY=your_api_key_here" > .env
 ```
 
 ### Run the Application
 
 ```bash
-# Launch Streamlit UI
 streamlit run app.py
-
-# Or run a demo
-python main.py demo
 ```
 
-### Use as a Library
+Open [http://localhost:8501](http://localhost:8501) in your browser.
 
-```python
-from risk_assessment import RiskAssessmentEngine
-
-# Initialize engine
-engine = RiskAssessmentEngine(api_key="your_groq_key")
-
-# Analyze a document
-result = engine.analyze_document(contract_text)
-
-# Get results
-print(f"Overall Risk: {result.risk_summary.overall_score}/100")
-print(f"Risk Level: {result.risk_summary.overall_level.value}")
-
-# Export report
-markdown = engine.export_markdown_report(result)
-```
-
-## 📊 Risk Categories
-
-| Category | Description | Examples |
-|----------|-------------|----------|
-| **Financial** | Money & payment risks | Unlimited liability, hidden fees, non-refundable deposits |
-| **Legal Liability** | Responsibility risks | One-sided indemnification, warranty disclaimers |
-| **Termination** | Exit risks | Auto-renewal, termination fees, lock-in periods |
-| **Intellectual Property** | IP ownership risks | Full IP transfer, work-for-hire, moral rights waivers |
-| **Confidentiality** | Data protection risks | Perpetual confidentiality, no return obligations |
-| **Dispute Resolution** | Legal process risks | Binding arbitration, distant jurisdiction, class action waivers |
-| **Compliance** | Regulatory risks | Strict liability, unlimited audit rights |
-| **Operational** | Day-to-day risks | Exclusive dealing, non-compete clauses |
-
-## 🔢 Risk Scoring
-
-| Score Range | Severity | Meaning |
-|-------------|----------|---------|
-| 0-30 | LOW | Standard clauses, minimal risk |
-| 31-60 | MEDIUM | Worth reviewing, some concerns |
-| 61-85 | HIGH | Significant issues, negotiate before signing |
-| 86-100 | CRITICAL | Dangerous, potential deal-breaker |
+---
 
 ## 🏗️ Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    Document Input                            │
+│                    📤 Document Upload                        │
+│              (PDF, DOCX, TXT - Sidebar)                     │
 └─────────────────────────────────────────────────────────────┘
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        │                     │                     │
+        ▼                     ▼                     ▼
+┌───────────────┐   ┌───────────────┐   ┌───────────────┐
+│ 📊 Risk       │   │ 🤝 Negotiate  │   │ 💬 Document   │
+│ Assessment    │   │ AI (6 Agents) │   │ Chat (RAG)    │
+└───────────────┘   └───────────────┘   └───────────────┘
+        │                     │                     │
+        ▼                     ▼                     ▼
+┌───────────────┐   ┌───────────────┐   ┌───────────────┐
+│ ✨ Clause     │   │ 🌐 Language   │   │ 📄 Document   │
+│ Simplifier    │   │ Translation   │   │ Processor     │
+└───────────────┘   └───────────────┘   └───────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
-│  Layer 1: Fast Scanner (< 1 second)                         │
-│  - Keyword matching (500+ patterns)                         │
-│  - Pattern detection                                        │
-│  - Initial heatmap generation                               │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│  Layer 2: AI Deep Analysis (Groq Llama 3.1 70B)             │
-│  - Context understanding                                     │
-│  - Risk evaluation                                          │
-│  - Recommendation generation                                 │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│  Layer 3: Aggregation & Scoring                             │
-│  - Document-level metrics                                   │
-│  - Pattern identification                                   │
-│  - Priority ranking                                         │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│  Output: Dashboard, Reports, Visualizations                  │
+│              🔐 User Auth & 💾 History Storage              │
+│                    (JSON-based, Cloud Ready)                │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+---
 
 ## 📁 Project Structure
 
 ```
-risk_assessment/
-├── __init__.py              # Package initialization
-├── models.py                # Data models and types
-├── keyword_library.py       # 500+ risk keywords/phrases
-├── fast_scanner.py          # Rule-based fast scanning
-├── ai_analyzer.py           # Groq AI integration
-├── risk_scorer.py           # Scoring algorithm
-├── document_aggregator.py   # Result aggregation
-├── visualizations.py        # Charts and dashboards
-└── risk_assessment_engine.py # Main orchestrator
-
-app.py                       # Streamlit UI
-main.py                      # CLI entry point
-tests/
-└── test_risk_assessment.py  # Test suite
+ClauseCare_Nxtwave_Buildathon/
+│
+├── app.py                      # 🎯 Main Streamlit Application (2900+ lines)
+│
+├── risk_assessment/            # 📊 Risk Analysis Module
+│   ├── models.py               # Data models
+│   ├── fast_scanner.py         # Keyword-based scanning
+│   ├── ai_analyzer.py          # Groq AI integration
+│   ├── risk_scorer.py          # Scoring algorithms
+│   └── visualizations.py       # Charts & dashboards
+│
+├── negotiate_ai/               # 🤝 Multi-Agent Negotiation
+│   ├── models.py               # Pydantic models for all agents
+│   ├── agents.py               # 6 specialized AI agents
+│   └── orchestrator.py         # Agent coordination
+│
+├── rag_chatbot/                # 💬 Document Chat
+│   ├── faiss_store.py          # FAISS vector store (cloud-ready)
+│   ├── retriever.py            # Context retrieval
+│   └── chat_engine.py          # Conversation management
+│
+├── language_translator/        # 🌐 Translation Module
+│   └── translator.py           # 22+ Indian languages
+│
+├── Document_processor/         # 📄 Document Processing
+│   └── processor.py            # PDF, DOCX, TXT handling
+│
+├── Clause_Simplification/      # ✨ Simplification Module
+│   └── cli_main.py             # Readability analysis
+│
+├── auth/                       # 🔐 Authentication
+│   └── auth_manager.py         # Login, register, sessions
+│
+├── database/                   # 💾 Data Persistence
+│   └── db_manager.py           # JSON-based storage
+│
+├── data/                       # 📂 User Data Storage
+│   ├── users.json              # User accounts
+│   └── history.json            # Analysis history
+│
+├── .streamlit/                 # ⚙️ Streamlit Config
+│   └── config.toml             # Theme & settings
+│
+├── requirements.txt            # 📦 Dependencies
+└── README.md                   # 📖 This file
 ```
 
-## 🧪 Testing
+---
+
+## 🔧 Tech Stack
+
+| Category | Technology |
+|----------|------------|
+| **Frontend** | Streamlit with responsive CSS |
+| **AI Model** | Groq LLaMA 3.3 70B Versatile |
+| **Vector Store** | FAISS (cloud-compatible) |
+| **Embeddings** | Sentence Transformers (all-MiniLM-L6-v2) |
+| **PDF Processing** | PyMuPDF |
+| **Data Validation** | Pydantic |
+| **Auth** | Custom SHA-256 + Salt hashing |
+| **Storage** | JSON files (Streamlit Cloud compatible) |
+
+---
+
+## 🌐 Deployment
+
+### Streamlit Cloud (Recommended)
+
+1. Push to GitHub
+2. Go to [share.streamlit.io](https://share.streamlit.io)
+3. Connect your repository
+4. Add secrets in Settings:
+   ```toml
+   GROQ_API_KEY = "your-groq-api-key"
+   ```
+5. Deploy!
+
+### Local Development
 
 ```bash
-# Run all tests
-python -m pytest tests/ -v
-
-# Run with coverage
-python -m pytest tests/ --cov=risk_assessment
-
-# Run specific test class
-python -m pytest tests/test_risk_assessment.py::TestFastScanner -v
+streamlit run app.py
 ```
 
-## 📈 API Reference
+---
 
-### RiskAssessmentEngine
+## 📊 Buildathon Criteria Checklist
 
-```python
-class RiskAssessmentEngine:
-    def analyze_document(text, filename, context) -> DocumentRisk
-    def quick_scan(text) -> QuickScanResult
-    def analyze_clause(clause_text, context) -> ClauseRisk
-    def get_dashboard(document_risk) -> dict
-    def get_recommendations(document_risk) -> list[Recommendation]
-    def export_markdown_report(document_risk) -> str
-    def export_json(document_risk) -> dict
-```
+| Criteria | Status | Implementation |
+|----------|--------|----------------|
+| ✅ **Working Features** | Complete | 7 fully functional modules |
+| ✅ **AI Integration** | Complete | Groq LLaMA 3.3, Multi-agent system, RAG |
+| ✅ **Problem Statement** | Complete | Legal document analysis for Indian market |
+| ✅ **UI Usability** | Complete | Clean Streamlit UI with navigation |
+| ✅ **Responsiveness** | Complete | Mobile-friendly CSS breakpoints |
+| ✅ **Data Persistence** | Complete | JSON-based cloud-compatible storage |
+| ✅ **User Auth** | Complete | Secure login/register system |
 
-### DocumentRisk
+---
 
-```python
-@dataclass
-class DocumentRisk:
-    metadata: DocumentMetadata
-    risk_summary: RiskSummary
-    executive_summary: str
-    clause_risks: list[ClauseRisk]
-    top_risks: list[TopRisk]
-    must_address_immediately: list[ActionItem]
-    should_negotiate: list[str]
-    acceptable_as_is: list[str]
-    deal_breakers: list[str]
-    action_plan: list[str]
-```
+## 🎥 Demo
 
-## 🔧 Configuration
+[Watch the demo video](#) | [Try Live Demo](https://clausecare-nxtwave-buildathon.streamlit.app)
 
-### Analysis Context
+---
 
-```python
-from risk_assessment.ai_analyzer import AnalysisContext
+## 👥 Team
 
-context = AnalysisContext(
-    document_type="service_agreement",
-    user_role="customer",
-    industry="technology",
-    jurisdiction="united_states",
-    contract_value=100000.0
-)
+**Team Name:** ClauseCare
 
-result = engine.analyze_document(text, context=context)
-```
+Built for **OpenAI × NxtWave Buildathon 2025** 🏆
 
-### Engine Options
+---
 
-```python
-engine = RiskAssessmentEngine(
-    api_key="your_groq_key",      # Groq API key
-    use_ai=True,                   # Enable AI analysis
-    parallel_analysis=True,        # Parallel processing
-    max_workers=4                  # Number of workers
-)
-```
+## 📄 License
 
-## 🎯 Success Metrics
+MIT License - feel free to use and modify!
 
-| Metric | Target | Description |
-|--------|--------|-------------|
-| Accuracy | 95%+ | Correctly identifies dangerous clauses |
-| Speed | < 15s | Full document analysis time |
-| Clarity | High | Non-lawyers understand explanations |
-| Actionability | 100% | Every risk has a recommendation |
-
-## 📝 License
-
-MIT License
+---
 
 ## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Run tests
-5. Submit a pull request
+4. Submit a pull request
 
-## 📧 Support
+---
 
-For questions or issues, please open a GitHub issue
+<div align="center">
+
+**Made with ❤️ for the OpenAI × NxtWave Buildathon 2025**
+
+⭐ Star this repo if you found it helpful!
+
+</div>
