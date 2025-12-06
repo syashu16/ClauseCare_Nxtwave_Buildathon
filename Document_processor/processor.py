@@ -1,25 +1,67 @@
 """
-Advanced Document Processor.
+Advanced Document Processor for ClauseCare.
 Handles PDF, DOCX, TXT, and Images.
-Features: OCR, Metadata Extraction, PII Redaction, Text Chunking, and Content Analysis.
+Features: OCR, Metadata Extraction, Text Chunking, and Content Analysis.
+
+Note: OCR functionality requires Tesseract installation (optional for cloud deployment).
 """
 
-import fitz  # PyMuPDF
-import docx
-from PIL import Image
-import pytesseract
 import io
 import re
 from datetime import datetime
 from typing import Dict, Any, List, Union, Tuple
 
-# Libraries for analysis
-import textstat
-from langdetect import detect
+# PDF processing - PyMuPDF
+try:
+    import fitz
+    PYMUPDF_AVAILABLE = True
+except ImportError:
+    PYMUPDF_AVAILABLE = False
+    fitz = None
+
+# DOCX processing
+try:
+    import docx
+    DOCX_AVAILABLE = True
+except ImportError:
+    DOCX_AVAILABLE = False
+    docx = None
+
+# Image processing
+try:
+    from PIL import Image
+    PIL_AVAILABLE = True
+except ImportError:
+    PIL_AVAILABLE = False
+    Image = None
+
+# OCR - requires system Tesseract (optional)
+try:
+    import pytesseract
+    TESSERACT_AVAILABLE = True
+except ImportError:
+    TESSERACT_AVAILABLE = False
+    pytesseract = None
+
+# Text analysis
+try:
+    import textstat
+    TEXTSTAT_AVAILABLE = True
+except ImportError:
+    TEXTSTAT_AVAILABLE = False
+    textstat = None
+
+try:
+    from langdetect import detect
+    LANGDETECT_AVAILABLE = True
+except ImportError:
+    LANGDETECT_AVAILABLE = False
+    detect = None
 
 class DocumentProcessor:
     """
     Enterprise-grade document processor for extracting, cleaning, and analyzing text.
+    Works on Streamlit Cloud without requiring Tesseract OCR.
     """
 
     def __init__(self, tesseract_cmd: str = None):
@@ -28,7 +70,7 @@ class DocumentProcessor:
         Args:
             tesseract_cmd: Optional path to tesseract executable if not in PATH.
         """
-        if tesseract_cmd:
+        if tesseract_cmd and TESSERACT_AVAILABLE and pytesseract:
             pytesseract.pytesseract.tesseract_cmd = tesseract_cmd
 
     def process_document(self, file) -> Dict[str, Any]:
@@ -43,12 +85,18 @@ class DocumentProcessor:
             # 1. Extraction Strategy
             tables = []
             if file_ext == 'pdf':
+                if not PYMUPDF_AVAILABLE:
+                    raise ImportError("PyMuPDF not installed. Install with: pip install pymupdf")
                 text, metadata, tables = self._read_pdf(file)
             elif file_ext == 'docx':
+                if not DOCX_AVAILABLE:
+                    raise ImportError("python-docx not installed. Install with: pip install python-docx")
                 text, metadata, tables = self._read_docx(file)
             elif file_ext == 'txt':
                 text, metadata = self._read_txt(file)
             elif file_ext in ['jpg', 'jpeg', 'png']:
+                if not TESSERACT_AVAILABLE or not PIL_AVAILABLE:
+                    raise ImportError("OCR requires Tesseract and Pillow. Image processing not available on cloud.")
                 text, metadata = self._read_image(file)
             else:
                 raise ValueError(f"Unsupported format: {file_ext}")
@@ -79,14 +127,20 @@ class DocumentProcessor:
             return {"language": "Unknown", "readability_score": 0, "difficulty": "N/A"}
 
         # 1. Detect Language
-        try:
-            lang = detect(text)
-        except:
-            lang = "Unknown"
+        lang = "Unknown"
+        if LANGDETECT_AVAILABLE and detect:
+            try:
+                lang = detect(text)
+            except:
+                lang = "Unknown"
 
         # 2. Calculate Readability (Flesch Reading Ease)
-        # Score 90-100: Very Easy, 0-30: Very Confusing
-        score = textstat.flesch_reading_ease(text)
+        score = 50  # Default score
+        if TEXTSTAT_AVAILABLE and textstat:
+            try:
+                score = textstat.flesch_reading_ease(text)
+            except:
+                score = 50
         
         # 3. Interpret Score
         difficulty = "Standard"
@@ -96,7 +150,7 @@ class DocumentProcessor:
         else: difficulty = "Hard (College Level)"
 
         return {
-            "language": lang.upper(),
+            "language": lang.upper() if isinstance(lang, str) else "Unknown",
             "readability_score": score,
             "difficulty": difficulty
         }
@@ -110,19 +164,23 @@ class DocumentProcessor:
         
         # Extract Metadata
         metadata = {
-            "author": doc.metadata.get('author', 'unknown'),
-            "creation_date": doc.metadata.get('creationDate', 'unknown'),
+            "author": doc.metadata.get('author', 'unknown') if doc.metadata else 'unknown',
+            "creation_date": doc.metadata.get('creationDate', 'unknown') if doc.metadata else 'unknown',
             "pages": doc.page_count,
             "type": "PDF"
         }
 
         for page_num, page in enumerate(doc, 1):
             text = page.get_text()
-            # Fallback to OCR if page seems empty (scanned)
-            if len(text.strip()) < 50:
-                pix = page.get_pixmap(matrix=fitz.Matrix(2, 2))
-                img_data = pix.tobytes("png")
-                text = pytesseract.image_to_string(Image.open(io.BytesIO(img_data)))
+            # Fallback to OCR if page seems empty (scanned) - only if Tesseract available
+            if len(text.strip()) < 50 and TESSERACT_AVAILABLE and PIL_AVAILABLE and pytesseract and Image:
+                try:
+                    pix = page.get_pixmap(matrix=fitz.Matrix(2, 2))
+                    img_data = pix.tobytes("png")
+                    text = pytesseract.image_to_string(Image.open(io.BytesIO(img_data)))
+                except:
+                    # OCR failed, use whatever text we got
+                    pass
             
             full_text.append(text)
             
@@ -150,7 +208,9 @@ class DocumentProcessor:
         return text, metadata, tables
 
     def _read_txt(self, file) -> Tuple[str, Dict]:
-        content = file.read().decode("utf-8")
+        content = file.read()
+        if isinstance(content, bytes):
+            content = content.decode("utf-8", errors="ignore")
         metadata = {
             "size_bytes": len(content),
             "type": "TXT"
