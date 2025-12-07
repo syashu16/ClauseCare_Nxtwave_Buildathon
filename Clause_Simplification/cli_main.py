@@ -50,7 +50,7 @@ class LegalAI:
             print(Fore.RED + "CRITICAL ERROR: GROQ_API_KEY not found in .env")
             sys.exit(1)
         self.client = Groq(api_key=self.api_key)
-        self.model = "llama-3.3-70b-versatile" 
+        self.model = "llama-3.1-8b-instant" 
 
     def get_readability(self, text):
         """Calculates Flesch Reading Ease (Higher = Easier)"""

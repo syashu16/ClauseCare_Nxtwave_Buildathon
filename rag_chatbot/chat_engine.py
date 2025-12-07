@@ -71,7 +71,7 @@ class ChatEngine:
     - Suggested follow-ups
     """
     
-    MODEL = "llama-3.3-70b-versatile"
+    MODEL = "llama-3.1-8b-instant"
     MAX_TOKENS = 2048
     TEMPERATURE = 0.3
     

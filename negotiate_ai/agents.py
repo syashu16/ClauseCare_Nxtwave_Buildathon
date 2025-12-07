@@ -33,7 +33,7 @@ class BaseAgent:
     def __init__(self, api_key: Optional[str] = None):
         self.api_key = api_key or os.getenv("GROQ_API_KEY")
         self.client = Groq(api_key=self.api_key) if self.api_key else None
-        self.model = "llama-3.3-70b-versatile"
+        self.model = "llama-3.1-8b-instant"
         self.agent_name = "BaseAgent"
         self.role = ""
         self.expertise = ""

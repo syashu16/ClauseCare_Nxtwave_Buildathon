@@ -37,7 +37,7 @@ def get_groq_llm():
     """For Chat & RAG (Using Groq - Fast & Free)"""
     return ChatGroq(
         api_key=GROQ_API_KEY,
-        model="llama-3.3-70b-versatile",
+        model="llama-3.1-8b-instant",
         temperature=0.3
     )
 
@@ -105,7 +105,7 @@ def analyze_risk_agent(text):
     """
     try:
         res = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model="llama-3.1-8b-instant",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=10,
             temperature=0.1
@@ -134,7 +134,7 @@ def simplify_clause_agent(clause_text):
     """
     try:
         res = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model="llama-3.1-8b-instant",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=500,
             temperature=0.3
