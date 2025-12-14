@@ -9,7 +9,7 @@
 
 **An intelligent legal document analysis platform with 7 powerful AI modules**
 
-[🚀 Live Demo](https://clausecare-nxtwave-buildathon.streamlit.app) | [📖 Documentation](#-features) | [🎥 Video Demo](#)
+[🚀 Live Demo](https://clausecarenxtwavebuildathon-jcsp6pt9quzycdwkud6yxn.streamlit.app/) | [📖 Documentation](#-features) | [🎥 Video Demo](#)
 
 </div>
 
